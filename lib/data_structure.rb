@@ -11,7 +11,7 @@ class Node
   end
 
   def add_child(node)
-    @child_nodes.push(node)
+    @child_nodes << node
   end
 
   def find_child_node(value)
@@ -56,18 +56,52 @@ class Trie
     end
   end
 
+  def match(text)
+    match_info = {}
+    chars = text.split ""
+    chars.each_index do |i|
+      pattern =  prefix_match(chars[i..-1])
+      match_info[i] = pattern unless pattern.nil?
+    end
+    match_info
+  end
+
   private
 
   def dfs
     stack = []
     current_node = @root
-    stack.push(current_node)
+    stack.push << current_node
     until stack.empty?
       unless current_node.child_nodes.empty?
         stack.concat current_node.child_nodes
       end
       current_node = stack.pop
       yield current_node
+    end
+  end
+
+  def prefix_match(chars)
+    symbol = chars.first
+    spell = []
+    v = @root
+    index = 1
+    loop do
+      if v.child_nodes.empty?
+        return spell.join
+      else
+        has_edge = false
+        v.child_nodes.each do |w|
+          if w.value == symbol
+            symbol = chars[index]
+            index += 1
+            v = w
+            has_edge = true
+            break
+          end
+        end
+        return unless has_edge
+      end
     end
   end
 end
