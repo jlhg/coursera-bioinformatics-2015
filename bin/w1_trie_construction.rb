@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-# usage: ./w1_trie_construction.rb <sample.in>
+# usage: ./w1_trie_construction.rb sample.in > answer.out
 
 require_relative '../lib/data_structure'
-include DataStructure
 
 sample_file_path = ARGV[0]
 patterns = File.open(sample_file_path, "r") do |f|
