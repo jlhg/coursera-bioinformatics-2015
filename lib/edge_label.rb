@@ -1,0 +1,3 @@
+class EdgeLabel
+  attrno
+end
